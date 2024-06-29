@@ -30,13 +30,19 @@ jobs:
       run: |
         cd aggregate
         python -u subscribe/collect.py
-      
-    - name: Create/Update Gist
-      env:
-        GH_TOKEN: ${{ secrets.GIST_PAT}}
+        
+    - name: Commit and push changes
       run: |
-        cd aggregate/data
-        gh gist edit ${{ secrets.GIST_LINK }} --add "proxies.yaml"
-        gh gist edit ${{ secrets.GIST_LINK }} --add "subscribes.txt"
-        gh gist edit ${{ secrets.GIST_LINK }} --add "domains.txt"
-        gh gist edit ${{ secrets.GIST_LINK }} --add "valid-domains.txt"
+        git add aggregate/data
+        git commit -m "Add generated yaml"
+        git push
+      
+    # - name: Create/Update Gist
+    #   env:
+    #     GH_TOKEN: ${{ secrets.GIST_PAT}}
+    #   run: |
+    #     cd aggregate/data
+    #     gh gist edit ${{ secrets.GIST_LINK }} --add "proxies.yaml"
+    #     gh gist edit ${{ secrets.GIST_LINK }} --add "subscribes.txt"
+    #     gh gist edit ${{ secrets.GIST_LINK }} --add "domains.txt"
+    #     gh gist edit ${{ secrets.GIST_LINK }} --add "valid-domains.txt"
